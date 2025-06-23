@@ -27,11 +27,11 @@ link_directories(
 )
 
 add_executable(dlc_oracle
-  main.cpp
-  grpc_server.h grpc_server.cpp
-  dlc_service.h dlc_service.cpp
-  oracle.grpc.pb.cc oracle.pb.cc
-  oracle.grpc.pb.h oracle.pb.h
+  src/main.cpp
+  src/grpc_server.h src/grpc_server.cpp
+  src/dlc_service.h src/dlc_service.cpp
+  src/oracle.grpc.pb.cc src/oracle.pb.cc
+  src/oracle.grpc.pb.h src/oracle.pb.h
 )
 target_link_libraries(
     dlc_oracle PRIVATE
