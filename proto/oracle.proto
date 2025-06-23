@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package oracle;
+
+service DLC {
+  rpc CreateDLC (DLCRequest) returns (DLCReply);
+}
+
+message DLCRequest {
+  string local_pubkey = 1;
+  string local_txid = 2;
+  string local_fund_address = 3;
+  string local_change_address = 4;
+  string remote_pubkey = 5;
+  string remote_txid = 6;
+  string remote_fund_address = 7;
+  string remote_change_address = 8;
+}
+
+message DLCReply {
+  string message = 1;
+}
