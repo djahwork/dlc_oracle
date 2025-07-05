@@ -1,7 +1,7 @@
-# Utiliser une image Ubuntu comme base
+# Use Ubuntu
 FROM ubuntu:22.04
 
-# Installer les outils de base
+# Install dependencies
 RUN apt-get update && apt-get install -y \
     cmake \
     g++ \
@@ -22,6 +22,11 @@ RUN apt-get update && apt-get install -y \
     unzip \
     protobuf-compiler \
     libprotobuf-dev \
+    qtbase5-dev \
+    qtbase5-dev-tools \
+    qt6-base-dev \
+    qt6-tools-dev \
+    qt6-tools-dev-tools \
     && apt-get clean
 
 RUN ln -s /usr/bin/python3 /usr/bin/python
@@ -29,15 +34,13 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 WORKDIR /usr/include/nlohmann
 RUN wget https://github.com/nlohmann/json/releases/latest/download/json.hpp
 
-# Créer le répertoire de travail pour l'application
 WORKDIR /app
 
-# Copier les fichiers du projet dans l'image Docker
 COPY . /app
 
 RUN git clone https://github.com/p2pderivatives/cfd-dlc.git && \
 	rm ./cfd-dlc/CMakeLists.txt
-COPY ./CMakeLists.txt /app/cfd-dlc
+COPY docker/CMakeLists.txt /app/cfd-dlc
 
 RUN cd cfd-dlc && \
     ./scripts/install_cfd.sh && \
@@ -48,7 +51,7 @@ RUN cd cfd-dlc && \
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 
 # Install any needed packages specified in requirements.txt
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r docker/requirements.txt
 
 RUN git clone https://github.com/abseil/abseil-cpp.git
 RUN cd abseil-cpp && \
@@ -59,7 +62,9 @@ RUN cd abseil-cpp && \
     make -j 4 && \
     make install
     
-RUN git clone --recurse-submodules --depth=1 -b v1.58.0 https://github.com/grpc/grpc
+RUN git clone -b v1.58.0 https://github.com/grpc/grpc && \
+    cd grpc && \
+    git submodule update --init --recursive
 
 RUN cd grpc && \ 
     mkdir -p cmake/build && \
@@ -68,18 +73,17 @@ RUN cd grpc && \
     make -j 4 && \
     make install
     
-RUN protoc -I=. --grpc_out=. --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` oracle.proto
-RUN protoc -I=. --cpp_out=. oracle.proto
-
-RUN g++ -c -std=c++17 -o oracle.o oracle.cpp -I/usr/local/include
-RUN g++ -c -std=c++17 -o oracle.pb.o oracle.pb.cc -I/usr/local/include
-RUN g++ -c -std=c++17 -o oracle.grpc.pb.o oracle.grpc.pb.cc -I/usr/local/include
-
-RUN g++ -std=c++17 -o oracle oracle.o oracle.pb.o oracle.grpc.pb.o -L/usr/local/lib -lgrpc++ -lprotobuf -pthread -lgrpc -lgpr -labsl_base -labsl_synchronization -labsl_log_internal_check_op -labsl_log_internal_message -labsl_cord -labsl_cordz_info -labsl_cordz_functions -lcfd -lcfdcore -lcfddlc
+RUN protoc -I=proto/ --grpc_out=src/ --plugin=protoc-gen-grpc=`which grpc_cpp_plugin` proto/oracle.proto
+RUN protoc -I=proto/ --cpp_out=src/ proto/oracle.proto
+   
+# Create build directory and build with CMake
+RUN mkdir -p build && cd build && \
+    cmake .. && \
+    make -j4
 
 RUN pip install grpcio grpcio-tools
 
-RUN python -m grpc_tools.protoc -I=. --python_out=. --grpc_python_out=. oracle.proto
+RUN python -m grpc_tools.protoc -I=proto/ --python_out=api/ --grpc_python_out=api/ proto/oracle.proto
 
 # Command to run the application
 #CMD ["python", "-m" , "flask", "run", "--host=0.0.0.0"]
