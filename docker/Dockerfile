@@ -51,7 +51,7 @@ RUN cd cfd-dlc && \
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 
 # Install any needed packages specified in requirements.txt
-RUN pip3 install --no-cache-dir -r api/requirements.txt
+RUN pip3 install --no-cache-dir -r python_interface/requirements.txt
 
 RUN git clone https://github.com/abseil/abseil-cpp.git
 RUN cd abseil-cpp && \
@@ -83,8 +83,7 @@ RUN mkdir -p build && cd build && \
 
 RUN pip install grpcio grpcio-tools
 
-RUN python -m grpc_tools.protoc -I=proto/ --python_out=api/ --grpc_python_out=api/ proto/oracle.proto
+RUN python -m grpc_tools.protoc -I=proto/ --python_out=api/ --grpc_python_out=python_interface/ proto/oracle.proto
 
 # Command to run the application
-#CMD ["python", "-m" , "flask", "run", "--host=0.0.0.0"]
 CMD ["/bin/bash"]
