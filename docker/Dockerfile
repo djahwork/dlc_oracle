@@ -51,7 +51,7 @@ RUN cd cfd-dlc && \
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 
 # Install any needed packages specified in requirements.txt
-RUN pip3 install --no-cache-dir -r docker/requirements.txt
+RUN pip3 install --no-cache-dir -r api/requirements.txt
 
 RUN git clone https://github.com/abseil/abseil-cpp.git
 RUN cd abseil-cpp && \

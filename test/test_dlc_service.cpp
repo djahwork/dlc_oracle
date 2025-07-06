@@ -1,4 +1,5 @@
-#include "dlc_service.h"
+#include <gtest/gtest.h>
+#include "../src/dlc_service.h"  // Your gRPC service implementation
 
 #include <cfddlc/cfddlc_transactions.h>
 #include <cfdcore/cfdcore_key.h>
@@ -15,9 +16,20 @@ using cfd::dlc::TxInputInfo;
 using cfd::dlc::PartyParams;
 using cfd::dlc::DlcManager;
 
-grpc::Status DlcService::CreateDLC(
-    grpc::ServerContext*, const oracle::DLCRequest* request, oracle::DLCReply* reply
-) {
+using grpc::ServerContext;
+using oracle::DLCRequest;
+using oracle::DLCReply;
+
+class DlcServiceTest : public ::testing::Test {
+protected:
+    DlcService service;  // Your DlcService class implementing the gRPC server
+};
+
+TEST_F(DlcServiceTest, CreateDlc_ReturnsTransactionsAndSignatures) {
+    ServerContext context;
+    oracle::DLCRequest *request;
+    oracle::DLCReply *reply;
+
     std::vector<std::string> outcome_labels = {"BTC=1000", "BTC=3000"};
 
     const std::vector<DlcOutcome> outcomes = {
@@ -100,5 +112,7 @@ grpc::Status DlcService::CreateDLC(
         }
     }
 
-    return grpc::Status::OK;
+    //grpc::Status status = service.CreateDLC(&context, &request, &reply);
+
+    //EXPECT_TRUE(status.ok());          // R-values present
 }

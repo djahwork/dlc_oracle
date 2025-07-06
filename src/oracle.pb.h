@@ -491,22 +491,126 @@ class DLCReply final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kMessageFieldNumber = 1,
+    kCetTxsFieldNumber = 1,
+    kRValuesFieldNumber = 4,
+    kOutcomeMessagesFieldNumber = 5,
+    kFundTxFieldNumber = 2,
+    kRefundTxFieldNumber = 3,
   };
-  // string message = 1;
-  void clear_message() ;
-  const std::string& message() const;
-  template <typename Arg_ = const std::string&, typename... Args_>
-  void set_message(Arg_&& arg, Args_... args);
-  std::string* mutable_message();
-  PROTOBUF_NODISCARD std::string* release_message();
-  void set_allocated_message(std::string* ptr);
+  // repeated string cet_txs = 1;
+  int cet_txs_size() const;
+  private:
+  int _internal_cet_txs_size() const;
+
+  public:
+  void clear_cet_txs() ;
+  const std::string& cet_txs(int index) const;
+  std::string* mutable_cet_txs(int index);
+  void set_cet_txs(int index, const std::string& value);
+  void set_cet_txs(int index, std::string&& value);
+  void set_cet_txs(int index, const char* value);
+  void set_cet_txs(int index, const char* value, std::size_t size);
+  void set_cet_txs(int index, absl::string_view value);
+  std::string* add_cet_txs();
+  void add_cet_txs(const std::string& value);
+  void add_cet_txs(std::string&& value);
+  void add_cet_txs(const char* value);
+  void add_cet_txs(const char* value, std::size_t size);
+  void add_cet_txs(absl::string_view value);
+  const ::google::protobuf::RepeatedPtrField<std::string>& cet_txs() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_cet_txs();
 
   private:
-  const std::string& _internal_message() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_message(
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_cet_txs() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_cet_txs();
+
+  public:
+  // repeated string r_values = 4;
+  int r_values_size() const;
+  private:
+  int _internal_r_values_size() const;
+
+  public:
+  void clear_r_values() ;
+  const std::string& r_values(int index) const;
+  std::string* mutable_r_values(int index);
+  void set_r_values(int index, const std::string& value);
+  void set_r_values(int index, std::string&& value);
+  void set_r_values(int index, const char* value);
+  void set_r_values(int index, const char* value, std::size_t size);
+  void set_r_values(int index, absl::string_view value);
+  std::string* add_r_values();
+  void add_r_values(const std::string& value);
+  void add_r_values(std::string&& value);
+  void add_r_values(const char* value);
+  void add_r_values(const char* value, std::size_t size);
+  void add_r_values(absl::string_view value);
+  const ::google::protobuf::RepeatedPtrField<std::string>& r_values() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_r_values();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_r_values() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_r_values();
+
+  public:
+  // repeated string outcome_messages = 5;
+  int outcome_messages_size() const;
+  private:
+  int _internal_outcome_messages_size() const;
+
+  public:
+  void clear_outcome_messages() ;
+  const std::string& outcome_messages(int index) const;
+  std::string* mutable_outcome_messages(int index);
+  void set_outcome_messages(int index, const std::string& value);
+  void set_outcome_messages(int index, std::string&& value);
+  void set_outcome_messages(int index, const char* value);
+  void set_outcome_messages(int index, const char* value, std::size_t size);
+  void set_outcome_messages(int index, absl::string_view value);
+  std::string* add_outcome_messages();
+  void add_outcome_messages(const std::string& value);
+  void add_outcome_messages(std::string&& value);
+  void add_outcome_messages(const char* value);
+  void add_outcome_messages(const char* value, std::size_t size);
+  void add_outcome_messages(absl::string_view value);
+  const ::google::protobuf::RepeatedPtrField<std::string>& outcome_messages() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* mutable_outcome_messages();
+
+  private:
+  const ::google::protobuf::RepeatedPtrField<std::string>& _internal_outcome_messages() const;
+  ::google::protobuf::RepeatedPtrField<std::string>* _internal_mutable_outcome_messages();
+
+  public:
+  // string fund_tx = 2;
+  void clear_fund_tx() ;
+  const std::string& fund_tx() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_fund_tx(Arg_&& arg, Args_... args);
+  std::string* mutable_fund_tx();
+  PROTOBUF_NODISCARD std::string* release_fund_tx();
+  void set_allocated_fund_tx(std::string* ptr);
+
+  private:
+  const std::string& _internal_fund_tx() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_fund_tx(
       const std::string& value);
-  std::string* _internal_mutable_message();
+  std::string* _internal_mutable_fund_tx();
+
+  public:
+  // string refund_tx = 3;
+  void clear_refund_tx() ;
+  const std::string& refund_tx() const;
+  template <typename Arg_ = const std::string&, typename... Args_>
+  void set_refund_tx(Arg_&& arg, Args_... args);
+  std::string* mutable_refund_tx();
+  PROTOBUF_NODISCARD std::string* release_refund_tx();
+  void set_allocated_refund_tx(std::string* ptr);
+
+  private:
+  const std::string& _internal_refund_tx() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_refund_tx(
+      const std::string& value);
+  std::string* _internal_mutable_refund_tx();
 
   public:
   // @@protoc_insertion_point(class_scope:oracle.DLCReply)
@@ -514,12 +618,16 @@ class DLCReply final :
   class _Internal;
 
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1, 0, 31, 2> _table_;
+  static const ::google::protobuf::internal::TcParseTable<3, 5, 0, 71, 2> _table_;
   template <typename T> friend class ::google::protobuf::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
-    ::google::protobuf::internal::ArenaStringPtr message_;
+    ::google::protobuf::RepeatedPtrField<std::string> cet_txs_;
+    ::google::protobuf::RepeatedPtrField<std::string> r_values_;
+    ::google::protobuf::RepeatedPtrField<std::string> outcome_messages_;
+    ::google::protobuf::internal::ArenaStringPtr fund_tx_;
+    ::google::protobuf::internal::ArenaStringPtr refund_tx_;
     mutable ::google::protobuf::internal::CachedSize _cached_size_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
@@ -955,55 +1063,394 @@ inline void DLCRequest::set_allocated_remote_change_address(std::string* value) 
 
 // DLCReply
 
-// string message = 1;
-inline void DLCReply::clear_message() {
-  _impl_.message_.ClearToEmpty();
+// repeated string cet_txs = 1;
+inline int DLCReply::_internal_cet_txs_size() const {
+  return _internal_cet_txs().size();
 }
-inline const std::string& DLCReply::message() const {
-  // @@protoc_insertion_point(field_get:oracle.DLCReply.message)
-  return _internal_message();
+inline int DLCReply::cet_txs_size() const {
+  return _internal_cet_txs_size();
+}
+inline void DLCReply::clear_cet_txs() {
+  _internal_mutable_cet_txs()->Clear();
+}
+inline std::string* DLCReply::add_cet_txs() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  std::string* _s = _internal_mutable_cet_txs()->Add();
+  // @@protoc_insertion_point(field_add_mutable:oracle.DLCReply.cet_txs)
+  return _s;
+}
+inline const std::string& DLCReply::cet_txs(int index) const {
+  // @@protoc_insertion_point(field_get:oracle.DLCReply.cet_txs)
+  return _internal_cet_txs().Get(index);
+}
+inline std::string* DLCReply::mutable_cet_txs(int index) {
+  // @@protoc_insertion_point(field_mutable:oracle.DLCReply.cet_txs)
+  return _internal_mutable_cet_txs()->Mutable(index);
+}
+inline void DLCReply::set_cet_txs(int index, const std::string& value) {
+  _internal_mutable_cet_txs()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::set_cet_txs(int index, std::string&& value) {
+  _internal_mutable_cet_txs()->Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::set_cet_txs(int index, const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  _internal_mutable_cet_txs()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::set_cet_txs(int index, const char* value,
+                              std::size_t size) {
+  _internal_mutable_cet_txs()->Mutable(index)->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::set_cet_txs(int index, absl::string_view value) {
+  _internal_mutable_cet_txs()->Mutable(index)->assign(value.data(),
+                                                     value.size());
+  // @@protoc_insertion_point(field_set_string_piece:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::add_cet_txs(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_cet_txs()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::add_cet_txs(std::string&& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_cet_txs()->Add(std::move(value));
+  // @@protoc_insertion_point(field_add:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::add_cet_txs(const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_cet_txs()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::add_cet_txs(const char* value, std::size_t size) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_cet_txs()->Add()->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:oracle.DLCReply.cet_txs)
+}
+inline void DLCReply::add_cet_txs(absl::string_view value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_cet_txs()->Add()->assign(value.data(), value.size());
+  // @@protoc_insertion_point(field_add_string_piece:oracle.DLCReply.cet_txs)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DLCReply::cet_txs() const {
+  // @@protoc_insertion_point(field_list:oracle.DLCReply.cet_txs)
+  return _internal_cet_txs();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>* DLCReply::mutable_cet_txs() {
+  // @@protoc_insertion_point(field_mutable_list:oracle.DLCReply.cet_txs)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_cet_txs();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DLCReply::_internal_cet_txs() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.cet_txs_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+DLCReply::_internal_mutable_cet_txs() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.cet_txs_;
+}
+
+// string fund_tx = 2;
+inline void DLCReply::clear_fund_tx() {
+  _impl_.fund_tx_.ClearToEmpty();
+}
+inline const std::string& DLCReply::fund_tx() const {
+  // @@protoc_insertion_point(field_get:oracle.DLCReply.fund_tx)
+  return _internal_fund_tx();
 }
 template <typename Arg_, typename... Args_>
-inline PROTOBUF_ALWAYS_INLINE void DLCReply::set_message(Arg_&& arg,
+inline PROTOBUF_ALWAYS_INLINE void DLCReply::set_fund_tx(Arg_&& arg,
                                                      Args_... args) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.message_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:oracle.DLCReply.message)
+  _impl_.fund_tx_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.fund_tx)
 }
-inline std::string* DLCReply::mutable_message() {
-  std::string* _s = _internal_mutable_message();
-  // @@protoc_insertion_point(field_mutable:oracle.DLCReply.message)
+inline std::string* DLCReply::mutable_fund_tx() {
+  std::string* _s = _internal_mutable_fund_tx();
+  // @@protoc_insertion_point(field_mutable:oracle.DLCReply.fund_tx)
   return _s;
 }
-inline const std::string& DLCReply::_internal_message() const {
+inline const std::string& DLCReply::_internal_fund_tx() const {
   PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
-  return _impl_.message_.Get();
+  return _impl_.fund_tx_.Get();
 }
-inline void DLCReply::_internal_set_message(const std::string& value) {
+inline void DLCReply::_internal_set_fund_tx(const std::string& value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  _impl_.message_.Set(value, GetArenaForAllocation());
+  _impl_.fund_tx_.Set(value, GetArenaForAllocation());
 }
-inline std::string* DLCReply::_internal_mutable_message() {
+inline std::string* DLCReply::_internal_mutable_fund_tx() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
   ;
-  return _impl_.message_.Mutable( GetArenaForAllocation());
+  return _impl_.fund_tx_.Mutable( GetArenaForAllocation());
 }
-inline std::string* DLCReply::release_message() {
+inline std::string* DLCReply::release_fund_tx() {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  // @@protoc_insertion_point(field_release:oracle.DLCReply.message)
-  return _impl_.message_.Release();
+  // @@protoc_insertion_point(field_release:oracle.DLCReply.fund_tx)
+  return _impl_.fund_tx_.Release();
 }
-inline void DLCReply::set_allocated_message(std::string* value) {
+inline void DLCReply::set_allocated_fund_tx(std::string* value) {
   PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
-  _impl_.message_.SetAllocated(value, GetArenaForAllocation());
+  _impl_.fund_tx_.SetAllocated(value, GetArenaForAllocation());
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        if (_impl_.message_.IsDefault()) {
-          _impl_.message_.Set("", GetArenaForAllocation());
+        if (_impl_.fund_tx_.IsDefault()) {
+          _impl_.fund_tx_.Set("", GetArenaForAllocation());
         }
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:oracle.DLCReply.message)
+  // @@protoc_insertion_point(field_set_allocated:oracle.DLCReply.fund_tx)
+}
+
+// string refund_tx = 3;
+inline void DLCReply::clear_refund_tx() {
+  _impl_.refund_tx_.ClearToEmpty();
+}
+inline const std::string& DLCReply::refund_tx() const {
+  // @@protoc_insertion_point(field_get:oracle.DLCReply.refund_tx)
+  return _internal_refund_tx();
+}
+template <typename Arg_, typename... Args_>
+inline PROTOBUF_ALWAYS_INLINE void DLCReply::set_refund_tx(Arg_&& arg,
+                                                     Args_... args) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.refund_tx_.Set(static_cast<Arg_&&>(arg), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.refund_tx)
+}
+inline std::string* DLCReply::mutable_refund_tx() {
+  std::string* _s = _internal_mutable_refund_tx();
+  // @@protoc_insertion_point(field_mutable:oracle.DLCReply.refund_tx)
+  return _s;
+}
+inline const std::string& DLCReply::_internal_refund_tx() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.refund_tx_.Get();
+}
+inline void DLCReply::_internal_set_refund_tx(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  _impl_.refund_tx_.Set(value, GetArenaForAllocation());
+}
+inline std::string* DLCReply::_internal_mutable_refund_tx() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  ;
+  return _impl_.refund_tx_.Mutable( GetArenaForAllocation());
+}
+inline std::string* DLCReply::release_refund_tx() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  // @@protoc_insertion_point(field_release:oracle.DLCReply.refund_tx)
+  return _impl_.refund_tx_.Release();
+}
+inline void DLCReply::set_allocated_refund_tx(std::string* value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _impl_.refund_tx_.SetAllocated(value, GetArenaForAllocation());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        if (_impl_.refund_tx_.IsDefault()) {
+          _impl_.refund_tx_.Set("", GetArenaForAllocation());
+        }
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:oracle.DLCReply.refund_tx)
+}
+
+// repeated string r_values = 4;
+inline int DLCReply::_internal_r_values_size() const {
+  return _internal_r_values().size();
+}
+inline int DLCReply::r_values_size() const {
+  return _internal_r_values_size();
+}
+inline void DLCReply::clear_r_values() {
+  _internal_mutable_r_values()->Clear();
+}
+inline std::string* DLCReply::add_r_values() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  std::string* _s = _internal_mutable_r_values()->Add();
+  // @@protoc_insertion_point(field_add_mutable:oracle.DLCReply.r_values)
+  return _s;
+}
+inline const std::string& DLCReply::r_values(int index) const {
+  // @@protoc_insertion_point(field_get:oracle.DLCReply.r_values)
+  return _internal_r_values().Get(index);
+}
+inline std::string* DLCReply::mutable_r_values(int index) {
+  // @@protoc_insertion_point(field_mutable:oracle.DLCReply.r_values)
+  return _internal_mutable_r_values()->Mutable(index);
+}
+inline void DLCReply::set_r_values(int index, const std::string& value) {
+  _internal_mutable_r_values()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.r_values)
+}
+inline void DLCReply::set_r_values(int index, std::string&& value) {
+  _internal_mutable_r_values()->Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.r_values)
+}
+inline void DLCReply::set_r_values(int index, const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  _internal_mutable_r_values()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:oracle.DLCReply.r_values)
+}
+inline void DLCReply::set_r_values(int index, const char* value,
+                              std::size_t size) {
+  _internal_mutable_r_values()->Mutable(index)->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:oracle.DLCReply.r_values)
+}
+inline void DLCReply::set_r_values(int index, absl::string_view value) {
+  _internal_mutable_r_values()->Mutable(index)->assign(value.data(),
+                                                     value.size());
+  // @@protoc_insertion_point(field_set_string_piece:oracle.DLCReply.r_values)
+}
+inline void DLCReply::add_r_values(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_r_values()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add:oracle.DLCReply.r_values)
+}
+inline void DLCReply::add_r_values(std::string&& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_r_values()->Add(std::move(value));
+  // @@protoc_insertion_point(field_add:oracle.DLCReply.r_values)
+}
+inline void DLCReply::add_r_values(const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_r_values()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:oracle.DLCReply.r_values)
+}
+inline void DLCReply::add_r_values(const char* value, std::size_t size) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_r_values()->Add()->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:oracle.DLCReply.r_values)
+}
+inline void DLCReply::add_r_values(absl::string_view value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_r_values()->Add()->assign(value.data(), value.size());
+  // @@protoc_insertion_point(field_add_string_piece:oracle.DLCReply.r_values)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DLCReply::r_values() const {
+  // @@protoc_insertion_point(field_list:oracle.DLCReply.r_values)
+  return _internal_r_values();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>* DLCReply::mutable_r_values() {
+  // @@protoc_insertion_point(field_mutable_list:oracle.DLCReply.r_values)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_r_values();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DLCReply::_internal_r_values() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.r_values_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+DLCReply::_internal_mutable_r_values() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.r_values_;
+}
+
+// repeated string outcome_messages = 5;
+inline int DLCReply::_internal_outcome_messages_size() const {
+  return _internal_outcome_messages().size();
+}
+inline int DLCReply::outcome_messages_size() const {
+  return _internal_outcome_messages_size();
+}
+inline void DLCReply::clear_outcome_messages() {
+  _internal_mutable_outcome_messages()->Clear();
+}
+inline std::string* DLCReply::add_outcome_messages() {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  std::string* _s = _internal_mutable_outcome_messages()->Add();
+  // @@protoc_insertion_point(field_add_mutable:oracle.DLCReply.outcome_messages)
+  return _s;
+}
+inline const std::string& DLCReply::outcome_messages(int index) const {
+  // @@protoc_insertion_point(field_get:oracle.DLCReply.outcome_messages)
+  return _internal_outcome_messages().Get(index);
+}
+inline std::string* DLCReply::mutable_outcome_messages(int index) {
+  // @@protoc_insertion_point(field_mutable:oracle.DLCReply.outcome_messages)
+  return _internal_mutable_outcome_messages()->Mutable(index);
+}
+inline void DLCReply::set_outcome_messages(int index, const std::string& value) {
+  _internal_mutable_outcome_messages()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::set_outcome_messages(int index, std::string&& value) {
+  _internal_mutable_outcome_messages()->Mutable(index)->assign(std::move(value));
+  // @@protoc_insertion_point(field_set:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::set_outcome_messages(int index, const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  _internal_mutable_outcome_messages()->Mutable(index)->assign(value);
+  // @@protoc_insertion_point(field_set_char:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::set_outcome_messages(int index, const char* value,
+                              std::size_t size) {
+  _internal_mutable_outcome_messages()->Mutable(index)->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_set_pointer:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::set_outcome_messages(int index, absl::string_view value) {
+  _internal_mutable_outcome_messages()->Mutable(index)->assign(value.data(),
+                                                     value.size());
+  // @@protoc_insertion_point(field_set_string_piece:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::add_outcome_messages(const std::string& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_outcome_messages()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::add_outcome_messages(std::string&& value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_outcome_messages()->Add(std::move(value));
+  // @@protoc_insertion_point(field_add:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::add_outcome_messages(const char* value) {
+  ABSL_DCHECK(value != nullptr);
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_outcome_messages()->Add()->assign(value);
+  // @@protoc_insertion_point(field_add_char:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::add_outcome_messages(const char* value, std::size_t size) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_outcome_messages()->Add()->assign(
+      reinterpret_cast<const char*>(value), size);
+  // @@protoc_insertion_point(field_add_pointer:oracle.DLCReply.outcome_messages)
+}
+inline void DLCReply::add_outcome_messages(absl::string_view value) {
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  _internal_mutable_outcome_messages()->Add()->assign(value.data(), value.size());
+  // @@protoc_insertion_point(field_add_string_piece:oracle.DLCReply.outcome_messages)
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DLCReply::outcome_messages() const {
+  // @@protoc_insertion_point(field_list:oracle.DLCReply.outcome_messages)
+  return _internal_outcome_messages();
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>* DLCReply::mutable_outcome_messages() {
+  // @@protoc_insertion_point(field_mutable_list:oracle.DLCReply.outcome_messages)
+  PROTOBUF_TSAN_WRITE(&_impl_._tsan_detect_race);
+  return _internal_mutable_outcome_messages();
+}
+inline const ::google::protobuf::RepeatedPtrField<std::string>&
+DLCReply::_internal_outcome_messages() const {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return _impl_.outcome_messages_;
+}
+inline ::google::protobuf::RepeatedPtrField<std::string>*
+DLCReply::_internal_mutable_outcome_messages() {
+  PROTOBUF_TSAN_READ(&_impl_._tsan_detect_race);
+  return &_impl_.outcome_messages_;
 }
 
 #ifdef __GNUC__

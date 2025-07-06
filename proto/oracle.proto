@@ -18,5 +18,9 @@ message DLCRequest {
 }
 
 message DLCReply {
-  string message = 1;
+  repeated string cet_txs = 1;
+  string fund_tx = 2;
+  string refund_tx = 3;
+  repeated string r_values = 4;
+  repeated string outcome_messages = 5;
 }

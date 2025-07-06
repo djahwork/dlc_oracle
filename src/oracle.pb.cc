@@ -71,7 +71,14 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
         template <typename>
 PROTOBUF_CONSTEXPR DLCReply::DLCReply(::_pbi::ConstantInitialized)
     : _impl_{
-      /*decltype(_impl_.message_)*/ {
+      /*decltype(_impl_.cet_txs_)*/ {},
+      /*decltype(_impl_.r_values_)*/ {},
+      /*decltype(_impl_.outcome_messages_)*/ {},
+      /*decltype(_impl_.fund_tx_)*/ {
+          &::_pbi::fixed_address_empty_string,
+          ::_pbi::ConstantInitialized{},
+      },
+      /*decltype(_impl_.refund_tx_)*/ {
           &::_pbi::fixed_address_empty_string,
           ::_pbi::ConstantInitialized{},
       },
@@ -119,7 +126,11 @@ const ::uint32_t TableStruct_oracle_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
     ~0u,  // no _inlined_string_donated_
     ~0u,  // no _split_
     ~0u,  // no sizeof(Split)
-    PROTOBUF_FIELD_OFFSET(::oracle::DLCReply, _impl_.message_),
+    PROTOBUF_FIELD_OFFSET(::oracle::DLCReply, _impl_.cet_txs_),
+    PROTOBUF_FIELD_OFFSET(::oracle::DLCReply, _impl_.fund_tx_),
+    PROTOBUF_FIELD_OFFSET(::oracle::DLCReply, _impl_.refund_tx_),
+    PROTOBUF_FIELD_OFFSET(::oracle::DLCReply, _impl_.r_values_),
+    PROTOBUF_FIELD_OFFSET(::oracle::DLCReply, _impl_.outcome_messages_),
 };
 
 static const ::_pbi::MigrationSchema
@@ -139,7 +150,9 @@ const char descriptor_table_protodef_oracle_2eproto[] PROTOBUF_SECTION_VARIABLE(
     "nge_address\030\004 \001(\t\022\025\n\rremote_pubkey\030\005 \001(\t"
     "\022\023\n\013remote_txid\030\006 \001(\t\022\033\n\023remote_fund_add"
     "ress\030\007 \001(\t\022\035\n\025remote_change_address\030\010 \001("
-    "\t\"\033\n\010DLCReply\022\017\n\007message\030\001 \001(\t28\n\003DLC\0221\n"
+    "\t\"k\n\010DLCReply\022\017\n\007cet_txs\030\001 \003(\t\022\017\n\007fund_t"
+    "x\030\002 \001(\t\022\021\n\trefund_tx\030\003 \001(\t\022\020\n\010r_values\030\004"
+    " \003(\t\022\030\n\020outcome_messages\030\005 \003(\t28\n\003DLC\0221\n"
     "\tCreateDLC\022\022.oracle.DLCRequest\032\020.oracle."
     "DLCReplyb\006proto3"
 };
@@ -147,7 +160,7 @@ static ::absl::once_flag descriptor_table_oracle_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_oracle_2eproto = {
     false,
     false,
-    336,
+    416,
     descriptor_table_protodef_oracle_2eproto,
     "oracle.proto",
     &descriptor_table_oracle_2eproto_once,
@@ -673,17 +686,28 @@ DLCReply::DLCReply(const DLCReply& from) : ::google::protobuf::Message() {
   DLCReply* const _this = this;
   (void)_this;
   new (&_impl_) Impl_{
-      decltype(_impl_.message_){},
+      decltype(_impl_.cet_txs_){from._impl_.cet_txs_},
+      decltype(_impl_.r_values_){from._impl_.r_values_},
+      decltype(_impl_.outcome_messages_){from._impl_.outcome_messages_},
+      decltype(_impl_.fund_tx_){},
+      decltype(_impl_.refund_tx_){},
       /*decltype(_impl_._cached_size_)*/ {},
   };
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
-  _impl_.message_.InitDefault();
+  _impl_.fund_tx_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.message_.Set("", GetArenaForAllocation());
+        _impl_.fund_tx_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_message().empty()) {
-    _this->_impl_.message_.Set(from._internal_message(), _this->GetArenaForAllocation());
+  if (!from._internal_fund_tx().empty()) {
+    _this->_impl_.fund_tx_.Set(from._internal_fund_tx(), _this->GetArenaForAllocation());
+  }
+  _impl_.refund_tx_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.refund_tx_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_refund_tx().empty()) {
+    _this->_impl_.refund_tx_.Set(from._internal_refund_tx(), _this->GetArenaForAllocation());
   }
 
   // @@protoc_insertion_point(copy_constructor:oracle.DLCReply)
@@ -691,12 +715,20 @@ DLCReply::DLCReply(const DLCReply& from) : ::google::protobuf::Message() {
 inline void DLCReply::SharedCtor(::_pb::Arena* arena) {
   (void)arena;
   new (&_impl_) Impl_{
-      decltype(_impl_.message_){},
+      decltype(_impl_.cet_txs_){arena},
+      decltype(_impl_.r_values_){arena},
+      decltype(_impl_.outcome_messages_){arena},
+      decltype(_impl_.fund_tx_){},
+      decltype(_impl_.refund_tx_){},
       /*decltype(_impl_._cached_size_)*/ {},
   };
-  _impl_.message_.InitDefault();
+  _impl_.fund_tx_.InitDefault();
   #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-        _impl_.message_.Set("", GetArenaForAllocation());
+        _impl_.fund_tx_.Set("", GetArenaForAllocation());
+  #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  _impl_.refund_tx_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+        _impl_.refund_tx_.Set("", GetArenaForAllocation());
   #endif  // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 }
 DLCReply::~DLCReply() {
@@ -706,7 +738,11 @@ DLCReply::~DLCReply() {
 }
 inline void DLCReply::SharedDtor() {
   ABSL_DCHECK(GetArenaForAllocation() == nullptr);
-  _impl_.message_.Destroy();
+  _internal_mutable_cet_txs()->~RepeatedPtrField();
+  _internal_mutable_r_values()->~RepeatedPtrField();
+  _internal_mutable_outcome_messages()->~RepeatedPtrField();
+  _impl_.fund_tx_.Destroy();
+  _impl_.refund_tx_.Destroy();
 }
 void DLCReply::SetCachedSize(int size) const {
   _impl_._cached_size_.Set(size);
@@ -718,7 +754,11 @@ PROTOBUF_NOINLINE void DLCReply::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  _impl_.message_.ClearToEmpty();
+  _internal_mutable_cet_txs()->Clear();
+  _internal_mutable_r_values()->Clear();
+  _internal_mutable_outcome_messages()->Clear();
+  _impl_.fund_tx_.ClearToEmpty();
+  _impl_.refund_tx_.ClearToEmpty();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
 
@@ -730,35 +770,66 @@ const char* DLCReply::_InternalParse(
 
 
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 31, 2> DLCReply::_table_ = {
+const ::_pbi::TcParseTable<3, 5, 0, 71, 2> DLCReply::_table_ = {
   {
     0,  // no _has_bits_
     0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
+    5,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     &_DLCReply_default_instance_._instance,
     ::_pbi::TcParser::GenericFallback,  // fallback
   }, {{
-    // string message = 1;
+    {::_pbi::TcParser::MiniParse, {}},
+    // repeated string cet_txs = 1;
+    {::_pbi::TcParser::FastUR1,
+     {10, 63, 0, PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.cet_txs_)}},
+    // string fund_tx = 2;
     {::_pbi::TcParser::FastUS1,
-     {10, 63, 0, PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.message_)}},
+     {18, 63, 0, PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.fund_tx_)}},
+    // string refund_tx = 3;
+    {::_pbi::TcParser::FastUS1,
+     {26, 63, 0, PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.refund_tx_)}},
+    // repeated string r_values = 4;
+    {::_pbi::TcParser::FastUR1,
+     {34, 63, 0, PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.r_values_)}},
+    // repeated string outcome_messages = 5;
+    {::_pbi::TcParser::FastUR1,
+     {42, 63, 0, PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.outcome_messages_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
-    // string message = 1;
-    {PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.message_), 0, 0,
+    // repeated string cet_txs = 1;
+    {PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.cet_txs_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
+    // string fund_tx = 2;
+    {PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.fund_tx_), 0, 0,
     (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // string refund_tx = 3;
+    {PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.refund_tx_), 0, 0,
+    (0 | ::_fl::kFcSingular | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // repeated string r_values = 4;
+    {PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.r_values_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
+    // repeated string outcome_messages = 5;
+    {PROTOBUF_FIELD_OFFSET(DLCReply, _impl_.outcome_messages_), 0, 0,
+    (0 | ::_fl::kFcRepeated | ::_fl::kUtf8String | ::_fl::kRepSString)},
   }},
   // no aux_entries
   {{
-    "\17\7\0\0\0\0\0\0"
+    "\17\7\7\11\10\20\0\0"
     "oracle.DLCReply"
-    "message"
+    "cet_txs"
+    "fund_tx"
+    "refund_tx"
+    "r_values"
+    "outcome_messages"
   }},
 };
 
@@ -769,12 +840,44 @@ const ::_pbi::TcParseTable<0, 1, 0, 31, 2> DLCReply::_table_ = {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // string message = 1;
-  if (!this->_internal_message().empty()) {
-    const std::string& _s = this->_internal_message();
+  // repeated string cet_txs = 1;
+  for (int i = 0, n = this->_internal_cet_txs_size(); i < n; ++i) {
+    const auto& s = this->_internal_cet_txs().Get(i);
     ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
-        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "oracle.DLCReply.message");
-    target = stream->WriteStringMaybeAliased(1, _s, target);
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "oracle.DLCReply.cet_txs");
+    target = stream->WriteString(1, s, target);
+  }
+
+  // string fund_tx = 2;
+  if (!this->_internal_fund_tx().empty()) {
+    const std::string& _s = this->_internal_fund_tx();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "oracle.DLCReply.fund_tx");
+    target = stream->WriteStringMaybeAliased(2, _s, target);
+  }
+
+  // string refund_tx = 3;
+  if (!this->_internal_refund_tx().empty()) {
+    const std::string& _s = this->_internal_refund_tx();
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "oracle.DLCReply.refund_tx");
+    target = stream->WriteStringMaybeAliased(3, _s, target);
+  }
+
+  // repeated string r_values = 4;
+  for (int i = 0, n = this->_internal_r_values_size(); i < n; ++i) {
+    const auto& s = this->_internal_r_values().Get(i);
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "oracle.DLCReply.r_values");
+    target = stream->WriteString(4, s, target);
+  }
+
+  // repeated string outcome_messages = 5;
+  for (int i = 0, n = this->_internal_outcome_messages_size(); i < n; ++i) {
+    const auto& s = this->_internal_outcome_messages().Get(i);
+    ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+        s.data(), static_cast<int>(s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "oracle.DLCReply.outcome_messages");
+    target = stream->WriteString(5, s, target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -794,10 +897,34 @@ const ::_pbi::TcParseTable<0, 1, 0, 31, 2> DLCReply::_table_ = {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string message = 1;
-  if (!this->_internal_message().empty()) {
+  // repeated string cet_txs = 1;
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_cet_txs().size());
+  for (int i = 0, n = _internal_cet_txs().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_cet_txs().Get(i));
+  }
+  // repeated string r_values = 4;
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_r_values().size());
+  for (int i = 0, n = _internal_r_values().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_r_values().Get(i));
+  }
+  // repeated string outcome_messages = 5;
+  total_size += 1 * ::google::protobuf::internal::FromIntSize(_internal_outcome_messages().size());
+  for (int i = 0, n = _internal_outcome_messages().size(); i < n; ++i) {
+    total_size += ::google::protobuf::internal::WireFormatLite::StringSize(
+        _internal_outcome_messages().Get(i));
+  }
+  // string fund_tx = 2;
+  if (!this->_internal_fund_tx().empty()) {
     total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
-                                    this->_internal_message());
+                                    this->_internal_fund_tx());
+  }
+
+  // string refund_tx = 3;
+  if (!this->_internal_refund_tx().empty()) {
+    total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                    this->_internal_refund_tx());
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_impl_._cached_size_);
@@ -818,8 +945,14 @@ void DLCReply::MergeImpl(::google::protobuf::Message& to_msg, const ::google::pr
   ::uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_message().empty()) {
-    _this->_internal_set_message(from._internal_message());
+  _this->_internal_mutable_cet_txs()->MergeFrom(from._internal_cet_txs());
+  _this->_internal_mutable_r_values()->MergeFrom(from._internal_r_values());
+  _this->_internal_mutable_outcome_messages()->MergeFrom(from._internal_outcome_messages());
+  if (!from._internal_fund_tx().empty()) {
+    _this->_internal_set_fund_tx(from._internal_fund_tx());
+  }
+  if (!from._internal_refund_tx().empty()) {
+    _this->_internal_set_refund_tx(from._internal_refund_tx());
   }
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -840,8 +973,13 @@ void DLCReply::InternalSwap(DLCReply* other) {
   auto* lhs_arena = GetArenaForAllocation();
   auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.message_, lhs_arena,
-                                       &other->_impl_.message_, rhs_arena);
+  _impl_.cet_txs_.InternalSwap(&other->_impl_.cet_txs_);
+  _impl_.r_values_.InternalSwap(&other->_impl_.r_values_);
+  _impl_.outcome_messages_.InternalSwap(&other->_impl_.outcome_messages_);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.fund_tx_, lhs_arena,
+                                       &other->_impl_.fund_tx_, rhs_arena);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.refund_tx_, lhs_arena,
+                                       &other->_impl_.refund_tx_, rhs_arena);
 }
 
 ::google::protobuf::Metadata DLCReply::GetMetadata() const {
