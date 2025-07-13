@@ -53,7 +53,7 @@ TEST_F(DlcServiceTest, CreateDlc_ReturnsTransactionsAndSignatures) {
     }
 
     ///////////////// LOCAL INPUTS //////////////////////////////
-    const Pubkey local_pubkey(request->local_pubkey());
+    const Pubkey local_pubkey = Pubkey("");
     const Address local_change_address(request->local_change_address());
     const Address local_final_address(request->local_fund_address());
     const std::vector<TxInputInfo> local_inputs_info = {

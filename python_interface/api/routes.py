@@ -47,5 +47,8 @@ async def show_contracts():
 
 @router.post("/api/dlc/new")
 async def new_dlc():
-    response = send_dlc_request()
+    try:
+        response = send_dlc_request()
+    except Exception as err:
+        return JSONResponse(content={"message": f"error: {err}"})
     return JSONResponse(content={"message": response.message})

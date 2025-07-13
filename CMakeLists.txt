@@ -42,6 +42,7 @@ target_link_libraries(
     dlc_oracle PRIVATE
     Qt${QT_VERSION_MAJOR}::Core
     gRPC::grpc++
+    gRPC::grpc++_reflection
     protobuf::libprotobuf
     cfd
     cfdcore
@@ -70,6 +71,7 @@ add_executable(test_dlc_service
 target_link_libraries(test_dlc_service
   Qt${QT_VERSION_MAJOR}::Core
   gRPC::grpc++
+  gRPC::grpc++_reflection
   protobuf::libprotobuf
   gtest gtest_main
   gmock

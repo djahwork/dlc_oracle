@@ -1,2 +1,7 @@
 # Ignore CMake build directory
 build/
+CMakeLists.txt.user
+python_interface/__pycache__
+python_interface/api/__pycache__
+python_interface/grpc_client/__pycache__
+python_interface/app.db

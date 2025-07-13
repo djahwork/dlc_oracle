@@ -18,7 +18,8 @@ using cfd::dlc::DlcManager;
 grpc::Status DlcService::CreateDLC(
     grpc::ServerContext*, const oracle::DLCRequest* request, oracle::DLCReply* reply
 ) {
-    std::vector<std::string> outcome_labels = {"BTC=1000", "BTC=3000"};
+    return grpc::Status::OK;
+    /*std::vector<std::string> outcome_labels = {"BTC=1000", "BTC=3000"};
 
     const std::vector<DlcOutcome> outcomes = {
         {Amount::CreateBySatoshiAmount(10000), Amount::CreateBySatoshiAmount(0)},
@@ -100,5 +101,5 @@ grpc::Status DlcService::CreateDLC(
         }
     }
 
-    return grpc::Status::OK;
+    return grpc::Status::OK;*/
 }

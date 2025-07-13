@@ -1,9 +1,10 @@
 #include "grpc_server.h"
 #include "dlc_service.h"
+#include <grpcpp/ext/proto_server_reflection_plugin.h>
 
 #include <grpcpp/server_builder.h>
 #include <iostream>
-#include <thread>
+//#include <thread>
 
 GrpcServer::GrpcServer(const std::string& addr, QObject* parent)
     : QObject(parent), address_(addr) {}
@@ -11,6 +12,8 @@ GrpcServer::GrpcServer(const std::string& addr, QObject* parent)
 GrpcServer::~GrpcServer() { stop(); }
 
 bool GrpcServer::start() {
+    grpc::reflection::InitProtoReflectionServerBuilderPlugin();
+
     grpc::ServerBuilder builder;
     builder.AddListeningPort(address_, grpc::InsecureServerCredentials());
 
@@ -26,7 +29,8 @@ bool GrpcServer::start() {
 
     std::cout << "gRPC server listening on " << address_ << std::endl;
     // Run server in a background thread so Qt event‑loop continues.
-    std::thread([s = server_.get()] { s->Wait(); }).detach();
+    //std::thread([s = server_.get()] { s->Wait(); }).detach();
+    server_->Wait();
     return true;
 }
 
