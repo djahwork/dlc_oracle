@@ -29,7 +29,7 @@ bool GrpcServer::start() {
 
     std::cout << "gRPC server listening on " << address_ << std::endl;
     // Run server in a background thread so Qt event‑loop continues.
-    //std::thread([s = server_.get()] { s->Wait(); }).detach();
+    // std::thread([s = server_.get()] { s->Wait(); }).detach();
     server_->Wait();
     return true;
 }
