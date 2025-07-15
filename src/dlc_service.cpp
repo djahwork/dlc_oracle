@@ -44,6 +44,7 @@ grpc::Status DlcService::CreateDLC(
     }
     */
     //const Pubkey local_pubkey(request->local_pubkey());
+    std::cout << "request local pubkey: " << request->local_pubkey() << std::endl;
     const Pubkey local_pubkey("0313d4a6c1ec5398a2353682ba979579d4c08a28b65f1afc4931696c60e671d5e9");
     const Address local_change_address("tb1qxq386xe64jytpydna35me0aqwgk3rxqlc9jhsl");
     const Address local_final_address("tb1qx7m5vx28mm6cmrj4gkwjm27qjtgzsu85d7k8kj");
