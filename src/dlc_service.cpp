@@ -43,13 +43,11 @@ grpc::Status DlcService::CreateDLC(
         outcome_msgs.push_back({msg});
     }
     */
-    //const Pubkey local_pubkey(request->local_pubkey());
-    std::cout << "request local pubkey: " << request->local_pubkey() << std::endl;
-    const Pubkey local_pubkey("0313d4a6c1ec5398a2353682ba979579d4c08a28b65f1afc4931696c60e671d5e9");
-    const Address local_change_address("tb1qxq386xe64jytpydna35me0aqwgk3rxqlc9jhsl");
-    const Address local_final_address("tb1qx7m5vx28mm6cmrj4gkwjm27qjtgzsu85d7k8kj");
+    const Pubkey local_pubkey(request->local_pubkey());
+    const Address local_final_address(request->local_final_address());
+    const Address local_change_address(request->local_change_address());
     const std::vector<TxInputInfo> local_inputs_info = {
-        TxInputInfo{TxIn(Txid("ff33adc805639b003451a12eee3a5f01480786ebe1e6087b198b46f2dc6936ab"), 0, 0), 108}
+        TxInputInfo{TxIn(Txid(request->local_txid()), 0, 0), 108}
     };
     const Amount local_input_amount = Amount::CreateBySatoshiAmount(100965);
     const Amount local_collateral_amount = Amount::CreateBySatoshiAmount(10000);
@@ -60,11 +58,11 @@ grpc::Status DlcService::CreateDLC(
         local_input_amount, local_collateral_amount
     };
 
-    const Pubkey remote_pubkey("025b02828008b6b757b04fdce6e67175a51201d30fae207916bafae210e512d388");
-    const Address remote_change_address("tb1qn92klx003crrkplc7208x9n2xw5786le52hn96");
-    const Address remote_final_address("tb1qxnk3v6c5knt53drts85vuf05uzyrawvlwkwajf");
+    const Pubkey remote_pubkey(request->remote_pubkey());
+    const Address remote_final_address(request->remote_final_address());
+    const Address remote_change_address(request->remote_change_address());
     const std::vector<TxInputInfo> remote_inputs_info = {
-        TxInputInfo{TxIn(Txid("ff33adc805639b003451a12eee3a5f01480786ebe1e6087b198b46f2dc6936ab"), 0, 0), 108}
+        TxInputInfo{TxIn(Txid(request->remote_txid()), 0, 0), 108}
     };
     const Amount remote_input_amount = Amount::CreateBySatoshiAmount(25035);
     const Amount remote_collateral_amount = Amount::CreateBySatoshiAmount(0);
@@ -78,13 +76,10 @@ grpc::Status DlcService::CreateDLC(
     const uint32_t MATURITY_TIME = 1579072156;
     const uint32_t FEE_RATE = 1;
 
-    std::cout << "test" << std::endl;
-
     auto dlc_transactions = DlcManager::CreateDlcTransactions(
         outcomes, local_params, remote_params, MATURITY_TIME, FEE_RATE
     );
 
-    std::cout << "test" << std::endl;
     std::cout << "fund tx: " << dlc_transactions.fund_transaction.GetHex() << std::endl;
     for(const auto& cet: dlc_transactions.cets){
         std::cout << "cet: " << cet.GetHex() << std::endl;
