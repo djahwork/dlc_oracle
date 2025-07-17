@@ -44,7 +44,7 @@ grpc::Status DlcService::CreateDLC(
     }
     */
     const Pubkey local_pubkey(request->local_pubkey());
-    const Address local_final_address(request->local_final_address());
+    const Address local_fund_address(request->local_fund_address());
     const Address local_change_address(request->local_change_address());
     const std::vector<TxInputInfo> local_inputs_info = {
         TxInputInfo{TxIn(Txid(request->local_txid()), 0, 0), 108}
@@ -54,12 +54,12 @@ grpc::Status DlcService::CreateDLC(
 
     const PartyParams local_params = {
         local_pubkey, local_change_address.GetLockingScript(),
-        local_final_address.GetLockingScript(), local_inputs_info,
+        local_fund_address.GetLockingScript(), local_inputs_info,
         local_input_amount, local_collateral_amount
     };
 
     const Pubkey remote_pubkey(request->remote_pubkey());
-    const Address remote_final_address(request->remote_final_address());
+    const Address remote_fund_address(request->remote_fund_address());
     const Address remote_change_address(request->remote_change_address());
     const std::vector<TxInputInfo> remote_inputs_info = {
         TxInputInfo{TxIn(Txid(request->remote_txid()), 0, 0), 108}
@@ -69,7 +69,7 @@ grpc::Status DlcService::CreateDLC(
 
     const PartyParams remote_params = {
         remote_pubkey, remote_change_address.GetLockingScript(),
-        remote_final_address.GetLockingScript(), remote_inputs_info,
+        remote_fund_address.GetLockingScript(), remote_inputs_info,
         remote_input_amount, remote_collateral_amount
     };
 
