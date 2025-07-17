@@ -16,7 +16,7 @@ def create_contract(data):
     cursor.execute('''
         INSERT INTO counterparts (contract_id, role, pubkey, collateral, txid, fund_address, change_address)
         VALUES (?, ?, ?, ?, ?, ?, ?)''',
-        (contract_id, 'creator', data.pubkey, data.collateral, data.txid, data.fund_address, data.change_address)
+        (contract_id, 'maker', data.pubkey, data.collateral, data.txid, data.fund_address, data.change_address)
     )
 
     conn.commit()
@@ -30,13 +30,13 @@ def take_contract(data):
     cursor.execute('''
         INSERT INTO counterparts (contract_id, role, pubkey, collateral, txid, fund_address, change_address)
         VALUES (?, ?, ?, ?, ?, ?, ?)''',
-        (data.contract_id, 'buyer', data.pubkey, data.collateral, data.txid, data.fund_address, data.change_address)
+        (data.contract_id, 'taker', data.pubkey, data.collateral, data.txid, data.fund_address, data.change_address)
     )
 
     cursor.execute('''
         SELECT pubkey, txid, fund_address, change_address
         FROM counterparts
-        WHERE contract_id=? AND role='creator'
+        WHERE contract_id=? AND role='maker'
     ''', (data.contract_id,))
     result = cursor.fetchone()
 
