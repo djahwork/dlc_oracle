@@ -2,20 +2,20 @@ import grpc
 import oracle_pb2
 import oracle_pb2_grpc
 
-def send_dlc_request(creator=None, buyer=None):
+def send_dlc_request(maker=None, taker=None):
     with grpc.insecure_channel("0.0.0.0:50051") as channel:
         stub = oracle_pb2_grpc.DLCStub(channel)
 
-        if creator and buyer:
+        if maker and taker:
             request = oracle_pb2.DLCRequest(
-                local_pubkey=creator[0],
-                local_txid=creator[1],
-                local_fund_address=creator[2],
-                local_change_address=creator[3],
-                remote_pubkey=buyer.pubkey,
-                remote_txid=buyer.txid,
-                remote_fund_address=buyer.fund_address,
-                remote_change_address=buyer.change_address
+                local_pubkey=maker[0],
+                local_txid=maker[1],
+                local_fund_address=maker[2],
+                local_change_address=maker[3],
+                remote_pubkey=taker.pubkey,
+                remote_txid=taker.txid,
+                remote_fund_address=taker.fund_address,
+                remote_change_address=taker.change_address
             )
         else:
             # raise Exception("Missing creator or buyer inputs")
