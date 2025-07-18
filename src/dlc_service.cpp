@@ -81,20 +81,18 @@ grpc::Status DlcService::CreateDLC(
     );
 
     std::cout << "fund tx: " << dlc_transactions.fund_transaction.GetHex() << std::endl;
+    reply->set_fund_tx(dlc_transactions.fund_transaction.GetHex());
+
     for(const auto& cet: dlc_transactions.cets){
         std::cout << "cet: " << cet.GetHex() << std::endl;
-    }
-    std::cout << "refund tx: " << dlc_transactions.refund_transaction.GetHex() << std::endl;
-    return grpc::Status::OK;
-    /*
-    Amount fund_input = local_input_amount + remote_input_amount;
-
-    reply->set_fund_tx(dlc_transactions.fund_transaction.GetHex());
-    reply->set_refund_tx(dlc_transactions.refund_transaction.GetHex());
-
-    for (const auto& cet : dlc_transactions.cets) {
         reply->add_cet_txs(cet.GetHex());
     }
+
+    std::cout << "refund tx: " << dlc_transactions.refund_transaction.GetHex() << std::endl;
+    reply->set_refund_tx(dlc_transactions.refund_transaction.GetHex());
+
+    /*
+    Amount fund_input = local_input_amount + remote_input_amount;
 
     for (const auto& r : r_values) {
         reply->add_r_values(r.GetData().GetHex());
@@ -105,6 +103,6 @@ grpc::Status DlcService::CreateDLC(
             reply->add_outcome_messages(msg.GetHex());
         }
     }
-
-    return grpc::Status::OK;*/
+    */
+    return grpc::Status::OK;
 }

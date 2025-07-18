@@ -1,27 +1,10 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
-from db.models import create_contract, take_contract, fetch_contracts
+from db.models import create_contract, take_contract, fetch_contract
 from grpc_client.client import send_dlc_request
-from pydantic import BaseModel
+from db.models import ContractId, ContractData, TakeContractData
 
 router = APIRouter()
-
-class ContractData(BaseModel):
-    status: str
-    way: str
-    product: str
-    underlying: str
-    currency: str
-    strike: str
-    price: str
-    pubkey: str
-    collateral: str
-    txid: str
-    fund_address: str
-    change_address: str
-
-class TakeContractData(ContractData):
-    contract_id: int
 
 @router.get("/")
 async def root():
@@ -34,21 +17,24 @@ async def new_contract(data: ContractData):
 
 @router.post("/api/contract/take")
 async def take(data: TakeContractData):
-    result = take_contract(data)
-    if not result:
-        return JSONResponse(content={"message": "Error"}, status_code=500)
+    take_contract(data)
+    return JSONResponse(content={"message": "Contract taken"})
 
-    grpc_result = send_dlc_request(result, data)
-    return JSONResponse(content={"message": grpc_result.message})
-
-@router.get("/api/contract")
+@router.get("/api/contract/{contract_id}")
 async def show_contracts():
-    return fetch_contracts()
+    return fetch_contract()
 
 @router.post("/api/dlc/new")
-async def new_dlc():
+async def new_dlc(data: ContractId):
+    contract = fetch_contract(data.contract_id)
+
     try:
-        response = send_dlc_request()
+        grpc_result = send_dlc_request(contract.maker, contract.taker)
     except Exception as err:
         return JSONResponse(content={"message": f"error: {err}"})
-    return JSONResponse(content={"message": response.message})
+    else:
+        return JSONResponse(content={
+            "fund_tx": grpc_result.fund_tx,
+            "refund_tx": grpc_result.refund_tx,
+            "cets": [res for res in grpc_result.cet_txs]
+        })

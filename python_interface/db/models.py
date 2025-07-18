@@ -1,5 +1,46 @@
 from .database import get_connection
 from fastapi.encoders import jsonable_encoder
+from pydantic import BaseModel
+
+class ContractId(BaseModel):
+    contract_id: int
+
+class ContractData(BaseModel):
+    status: str
+    way: str
+    product: str
+    underlying: str
+    currency: str
+    strike: str
+    price: str
+    pubkey: str
+    collateral: str
+    txid: str
+    fund_address: str
+    change_address: str
+
+class TakeContractData(ContractData):
+    contract_id: int
+
+class Counterpart(BaseModel):
+    role: str
+    pubkey: str
+    txid: str
+    fund_address: str
+    change_address: str
+    collateral: str
+
+class Contract(BaseModel):
+    contract_id: int
+    status: str
+    way: str
+    product: str
+    underlying: str
+    currency: str
+    strike: str
+    price: str
+    maker: Counterpart
+    taker: Counterpart
 
 def create_contract(data):
     conn = get_connection()
@@ -33,34 +74,69 @@ def take_contract(data):
         (data.contract_id, 'taker', data.pubkey, data.collateral, data.txid, data.fund_address, data.change_address)
     )
 
-    cursor.execute('''
-        SELECT pubkey, txid, fund_address, change_address
-        FROM counterparts
-        WHERE contract_id=? AND role='maker'
-    ''', (data.contract_id,))
-    result = cursor.fetchone()
-
     conn.commit()
     conn.close()
-    return result
 
-def fetch_contracts():
+def fetch_contract(contract_id):
     conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute('''
         SELECT
-            contracts.id, contracts.status, contracts.way, contracts.product,
-            contracts.underlying, contracts.currency, contracts.strike,
-            contracts.price, counterparts.role, counterparts.pubkey,
-            counterparts.collateral, counterparts.id
+            contracts.id,
+            contracts.status,
+            contracts.way,
+            contracts.product,
+            contracts.underlying,
+            contracts.currency,
+            contracts.strike,
+            contracts.price,
+            maker.role,
+            maker.pubkey,
+            maker.txid,
+            maker.fund_address,
+            maker.change_address,
+            maker.collateral,
+            taker.role,
+            taker.pubkey,
+            taker.txid,
+            taker.fund_address,
+            taker.change_address,
+            taker.collateral
         FROM contracts
-        INNER JOIN counterparts ON contracts.id = counterparts.contract_id
-    ''')
-    rows = cursor.fetchall()
+        INNER JOIN counterparts AS maker ON contracts.id = maker.contract_id AND maker.role = "maker"
+        INNER JOIN counterparts AS taker ON contracts.id = taker.contract_id AND taker.role = "taker"
+        WHERE contracts.id = ?
+    ''', (contract_id,))
+    res = cursor.fetchone()
+
     conn.close()
 
-    return {"results": [dict(zip([
-        "id", "status", "way", "product", "underlying", "currency",
-        "strike", "price", "role", "pubkey", "collateral", "counterpart_id"
-    ], row)) for row in rows]}
+    contract = Contract(
+        contract_id=res[0],
+        status=res[1],
+        way=res[2],
+        product=res[3],
+        underlying=res[4],
+        currency=res[5],
+        strike=res[6],
+        price=res[7],
+        maker=Counterpart(
+            role=res[8],
+            pubkey=res[9],
+            txid=res[10],
+            fund_address=res[11],
+            change_address=res[12],
+            collateral=res[13]
+        ),
+        taker=Counterpart(
+            role=res[14],
+            pubkey=res[15],
+            txid=res[16],
+            fund_address=res[17],
+            change_address=res[18],
+            collateral=res[19]
+        )
+    )
+
+    return contract

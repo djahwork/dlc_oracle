@@ -24,7 +24,7 @@ def init_db():
         CREATE TABLE IF NOT EXISTS counterparts (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             contract_id INTEGER NOT NULL,
-            role TEXT CHECK(role IN ('creator', 'buyer')) NOT NULL,
+            role TEXT CHECK(role IN ('maker', 'taker')) NOT NULL,
             pubkey TEXT NOT NULL,
             collateral TEXT NOT NULL,
             txid TEXT NOT NULL,
