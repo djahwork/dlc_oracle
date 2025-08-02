@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse
-from db.models import create_contract, take_contract, fetch_contract
+from db.models import create_contract, take_contract, fetch_contract, fetch_pending_contracts
 from grpc_client.client import send_dlc_request
 from db.models import ContractId, ContractData, TakeContractData
 
@@ -20,9 +20,27 @@ async def take(data: TakeContractData):
     take_contract(data)
     return JSONResponse(content={"message": "Contract taken"})
 
-@router.get("/api/contract/{contract_id}")
+@router.get("/api/contract/pending")
 async def show_contracts():
-    return fetch_contract()
+    contracts = fetch_pending_contracts()
+    results = [
+        {
+            "id": contract.contract_id,
+            "status": contract.status,
+            "way": contract.way,
+            "product": contract.product,
+            "underlying": contract.underlying,
+            "currency": contract.currency,
+            "strike": contract.strike,
+            "price": contract.price
+        }
+        for contract in contracts
+    ]
+    return JSONResponse(content={"results": results})
+
+@router.get("/api/contract/show/{contract_id}")
+async def show_contract(data: ContractId):
+    return fetch_contract(data.contract_id)
 
 @router.post("/api/dlc/new")
 async def new_dlc(data: ContractId):

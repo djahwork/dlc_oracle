@@ -23,12 +23,12 @@ class TakeContractData(ContractData):
     contract_id: int
 
 class Counterpart(BaseModel):
-    role: str
-    pubkey: str
-    txid: str
-    fund_address: str
-    change_address: str
-    collateral: str
+    role: str = None
+    pubkey: str = None
+    txid: str = None
+    fund_address: str = None
+    change_address: str = None
+    collateral: str = None
 
 class Contract(BaseModel):
     contract_id: int
@@ -76,6 +76,42 @@ def take_contract(data):
 
     conn.commit()
     conn.close()
+
+def fetch_pending_contracts():
+    conn = get_connection()
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        SELECT
+            contracts.id,
+            contracts.status,
+            contracts.way,
+            contracts.product,
+            contracts.underlying,
+            contracts.currency,
+            contracts.strike,
+            contracts.price
+        FROM contracts
+        WHERE contracts.status = "pending"
+    ''')
+    results = cursor.fetchall()
+
+    conn.close()
+
+    contracts = [Contract(
+        contract_id=res[0],
+        status=res[1],
+        way=res[2],
+        product=res[3],
+        underlying=res[4],
+        currency=res[5],
+        strike=res[6],
+        price=res[7],
+        maker=Counterpart(),
+        taker=Counterpart()
+    ) for res in results]
+
+    return contracts
 
 def fetch_contract(contract_id):
     conn = get_connection()
