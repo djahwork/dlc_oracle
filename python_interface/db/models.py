@@ -19,9 +19,6 @@ class ContractData(BaseModel):
     fund_address: str
     change_address: str
 
-class TakeContractData(ContractData):
-    contract_id: int
-
 class Counterpart(BaseModel):
     role: str = None
     pubkey: str = None
@@ -63,7 +60,7 @@ def create_contract(data):
     conn.commit()
     conn.close()
 
-def take_contract(data):
+def take_contract(contract_id, taker):
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -71,7 +68,7 @@ def take_contract(data):
     cursor.execute('''
         INSERT INTO counterparts (contract_id, role, pubkey, collateral, txid, fund_address, change_address)
         VALUES (?, ?, ?, ?, ?, ?, ?)''',
-        (data.contract_id, 'taker', data.pubkey, data.collateral, data.txid, data.fund_address, data.change_address)
+        (contract_id, 'taker', taker.pubkey, taker.collateral, taker.txid, taker.fund_address, taker.change_address)
     )
 
     conn.commit()
