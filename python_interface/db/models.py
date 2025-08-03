@@ -6,18 +6,19 @@ class ContractId(BaseModel):
     contract_id: int
 
 class ContractData(BaseModel):
-    status: str
-    way: str
-    product: str
-    underlying: str
-    currency: str
-    strike: str
-    price: str
-    pubkey: str
-    collateral: str
-    txid: str
-    fund_address: str
-    change_address: str
+    contract_id: int = None
+    status: str = None
+    way: str = None
+    product: str = None
+    underlying: str = None
+    currency: str = None
+    strike: str = None
+    price: str = None
+    pubkey: str = None
+    collateral: str = None
+    txid: str = None
+    fund_address: str = None
+    change_address: str = None
 
 class Counterpart(BaseModel):
     role: str = None
@@ -28,16 +29,16 @@ class Counterpart(BaseModel):
     collateral: str = None
 
 class Contract(BaseModel):
-    contract_id: int
-    status: str
-    way: str
-    product: str
-    underlying: str
-    currency: str
-    strike: str
-    price: str
-    maker: Counterpart
-    taker: Counterpart
+    contract_id: int = None
+    status: str = None
+    way: str = None
+    product: str = None
+    underlying: str = None
+    currency: str = None
+    strike: str = None
+    price: str = None
+    maker: Counterpart = None
+    taker: Counterpart = None
 
 def create_contract(data):
     conn = get_connection()
@@ -60,7 +61,7 @@ def create_contract(data):
     conn.commit()
     conn.close()
 
-def take_contract(contract_id, taker):
+def take_contract(data):
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -68,7 +69,7 @@ def take_contract(contract_id, taker):
     cursor.execute('''
         INSERT INTO counterparts (contract_id, role, pubkey, collateral, txid, fund_address, change_address)
         VALUES (?, ?, ?, ?, ?, ?, ?)''',
-        (contract_id, 'taker', taker.pubkey, taker.collateral, taker.txid, taker.fund_address, taker.change_address)
+        (data.contract_id, 'taker', data.pubkey, data.collateral, data.txid, data.fund_address, data.change_address)
     )
 
     conn.commit()
@@ -96,14 +97,8 @@ def fetch_pending_contracts():
     conn.close()
 
     contracts = [Contract(
-        contract_id=res[0],
-        status=res[1],
-        way=res[2],
-        product=res[3],
-        underlying=res[4],
-        currency=res[5],
-        strike=res[6],
-        price=res[7],
+        contract_id=res[0], status=res[1], way=res[2], product=res[3],
+        underlying=res[4], currency=res[5], strike=res[6], price=res[7],
         maker=Counterpart(),
         taker=Counterpart()
     ) for res in results]
@@ -146,29 +141,15 @@ def fetch_contract(contract_id):
     conn.close()
 
     contract = Contract(
-        contract_id=res[0],
-        status=res[1],
-        way=res[2],
-        product=res[3],
-        underlying=res[4],
-        currency=res[5],
-        strike=res[6],
-        price=res[7],
+        contract_id=res[0], status=res[1], way=res[2], product=res[3],
+        underlying=res[4], currency=res[5], strike=res[6], price=res[7],
         maker=Counterpart(
-            role=res[8],
-            pubkey=res[9],
-            txid=res[10],
-            fund_address=res[11],
-            change_address=res[12],
-            collateral=res[13]
+            role=res[8], pubkey=res[9], txid=res[10], fund_address=res[11],
+            change_address=res[12], collateral=res[13]
         ),
         taker=Counterpart(
-            role=res[14],
-            pubkey=res[15],
-            txid=res[16],
-            fund_address=res[17],
-            change_address=res[18],
-            collateral=res[19]
+            role=res[14], pubkey=res[15], txid=res[16], fund_address=res[17],
+            change_address=res[18], collateral=res[19]
         )
     )
 

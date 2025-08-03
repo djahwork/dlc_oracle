@@ -16,16 +16,16 @@ async def new_contract(data: ContractData):
     return JSONResponse(content={"message": "Contract saved"})
 
 @router.post("/api/contract/take")
-async def take(data: ContractId):
+async def take(data: ContractData):
     try:
-        take_contract(data.contract_id)
+        take_contract(data)
         contract = fetch_contract(data.contract_id)
         grpc_result = send_dlc_request(contract.maker, contract.taker)
     except Exception as err:
         return JSONResponse(content={"message": f"error: {err}"})
     else:
         return JSONResponse(content={
-            "message": "Contract taken"
+            "message": "Contract taken",
             "fund_tx": grpc_result.fund_tx,
             "refund_tx": grpc_result.refund_tx,
             "cets": [res for res in grpc_result.cet_txs]
@@ -52,18 +52,3 @@ async def show_contracts():
 @router.get("/api/contract/show/{contract_id}")
 async def show_contract(data: ContractId):
     return fetch_contract(data.contract_id)
-
-@router.post("/api/dlc/new")
-async def new_dlc(data: ContractId):
-    contract = fetch_contract(data.contract_id)
-
-    try:
-        grpc_result = send_dlc_request(contract.maker, contract.taker)
-    except Exception as err:
-        return JSONResponse(content={"message": f"error: {err}"})
-    else:
-        return JSONResponse(content={
-            "fund_tx": grpc_result.fund_tx,
-            "refund_tx": grpc_result.refund_tx,
-            "cets": [res for res in grpc_result.cet_txs]
-        })
